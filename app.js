@@ -1,11 +1,19 @@
 require('dotenv').config();
 
-const { Telegraf, Markup } = require('telegraf');
+const { Telegraf } = require('telegraf');
+const express = require('express');
+const expressApp = express();
+const port = process.env.PORT || 3000
+expressApp.get('/', (req, res) => {
+  res.send('Hello World!')
+});
+expressApp.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+});
 
 const app = new Telegraf(process.env.BOT_TOKEN);
 
 app.start(ctx => {
-    console.log(ctx.message.from);
     if (ctx.message.from.first_name !== undefined) {
       ctx.reply(
         `Bienvenido ${ctx.message.from.first_name} al chat bot de Movi Zulia, ¿ Ya has descargado la aplicación ? <a href="https://play.google.com/store/apps/details?id=com.saulmoralespa.movizulia">Descargar movi Zulia</a> 
